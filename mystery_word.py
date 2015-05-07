@@ -1,7 +1,7 @@
 import random
 
 difficulty = ""
-guesses = 8
+guesses = 4
 guessed_letters = []
 word_list = []
 
@@ -66,21 +66,19 @@ def ask_letter(guessed):
         print("That's not a valid guess, please guess again.")
         return ask_letter(guessed)
 
-def show_status(guess, word, current_stat):
-#    for guess in guesses:
+def display_word(guesses, word):
+    current_stat = []
+    length = len(word)
+    while length > 0:
+        current_stat.append("_ ")
+        length -= 1
+    for guess in guesses:
         if guess in word:
-            print("{} is in the word".format(guess))
             spots = [i for i, letter in enumerate(word) if letter == guess]
             for idx in spots:
                 current_stat[idx] = guess + " "
-                for i in current_stat:
-                    print (i, end="")
-                    return current_stat
-        else:
-            print("{} is not in the word, guesses left: {}".format(guess, guesses))
-            for i in current_stat:
-                print(i,end='')
-    return current_stat
+    for i in current_stat:
+        print (i, end="")
 
 def still_playing(the_word,guesses):
     word_as_list = list(the_word)
@@ -99,13 +97,6 @@ the_word = choose_word(diff)
 
 print("Your word is {} letters long".format(len(the_word)))
 
-#Create empty blanks
-blanks = []
-length = len(the_word)
-while length > 0:
-    blanks.append('_ ')
-    length -= 1
-
 #Loop through guesses
 while guesses > 0 and still_playing(the_word,guessed_letters):
     guess = ask_letter(guessed_letters)
@@ -113,7 +104,10 @@ while guesses > 0 and still_playing(the_word,guessed_letters):
 
     if guess not in the_word:
         guesses -= 1
+        print("{} is not in the word, guesses left: {}".format(guess, guesses))
+    else:
+        print("{} is in the word".format(guess))
 
-    show_status(guess,the_word,blanks)
+    display_word(guessed_letters,the_word)
 
     print(the_word)
