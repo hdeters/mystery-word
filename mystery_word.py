@@ -31,11 +31,6 @@ def hard_words(word_list):
             hard_word_list.append(word)
     return(hard_word_list)
 
-def random_word(word_list):
-    '''Choose a random word from the given list and return it'''
-    word = random.choice(word_list)
-    return word
-
 def intro():
     '''Ask the user what mode they would like to play (easy, med, hard) and
     return the choice'''
@@ -47,17 +42,17 @@ def intro():
         print("That's not a valid choice, type E, M, or H")
         return intro()
 
-def choose_word(diff):
+def choose_word(diff, easy, med, hard):
     '''Use the choice returned from intro() to choose a random word from the
     appropriate list'''
     if diff == "e":
-        word = random_word(easy_list)
+        word = random.choice(easy)
         return word
     elif diff == "m":
-        word = random_word(med_list)
+        word = random.choice(med)
         return word
     else:
-        word = random_word(hard_list)
+        word = random.choice(hard)
         return word
 
 def ask_letter(guessed):
@@ -118,8 +113,11 @@ def play_again():
 def main():
     guesses = 8
     guessed_letters = []
+    easy = easy_words(word_list)
+    med = medium_words(word_list)
+    hard = hard_words(word_list)
     diff = intro()
-    the_word = choose_word(diff)
+    the_word = choose_word(diff, easy, med, hard)
 
     print("Your word is {} letters long".format(len(the_word)))
 
@@ -144,7 +142,4 @@ def main():
     play_again()
 
 if __name__ == "__main__":
-    easy_list = easy_words(word_list)
-    med_list = medium_words(word_list)
-    hard_list = hard_words(word_list)
     main()
