@@ -87,6 +87,7 @@ def display_word(guesses, word):
                 current_stat[idx] = guess + " "
     for i in current_stat:
         print (i, end="")
+    print("\n")
 
 def still_playing(the_word,guesses):
     '''checks if all of the letters in the chosen word are in guesses. If so,
@@ -110,7 +111,7 @@ def play_again():
         return play_again()
 
 
-def main():
+def main_regular():
     guesses = 8
     guessed_letters = []
     easy = easy_words(word_list)
