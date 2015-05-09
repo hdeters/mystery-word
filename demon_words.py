@@ -1,9 +1,8 @@
-from mystery_word import *
+import game_functions as gf
 import random
 
 #word_list = ["bird", "calf", "river", "iriri", "chime", "crank", "stream","begin","iowan","imide","igrii", "kneecap",  "cookbook",
 #              "language", "sneaker", "algorithm", "integration", "brain"]
-
 
 word_list = []
 guess = ""
@@ -12,16 +11,6 @@ with open("/usr/share/dict/words") as filename:
     '''Read in dictionary of words'''
     for line in filename:
         word_list.append(line.strip().lower())
-
-def intro_question():
-    choice = input("Do you want to play (R)egular or (H)ard version?").lower()
-    if choice == 'r':
-        main_regular()
-    elif choice == 'h':
-        main_hard()
-    else:
-        print("Not a valid choice, enter R or H")
-        return intro_questions()
 
 def get_length():
     the_length = input("How long do you want the word to be?: ")
@@ -111,17 +100,17 @@ def choose_best_position(big_group):
 
 def ending(last_word,guessed_letters,guesses,guess):
     while guesses > 0:
-        if still_playing(last_word,guessed_letters):
-            guess = ask_letter(guessed_letters)
+        if gf.still_playing(last_word,guessed_letters):
+            guess = gf.ask_letter(guessed_letters)
             guessed_letters.append(guess)
             if guess in last_word:
                 print("{} is in the word, guesses left:{}".format(guess,guesses))
-                display_word(guessed_letters, last_word)
+                gf.display_word(guessed_letters, last_word)
                 return ending(last_word,guessed_letters,guesses,guess)
             else:
                 guesses -= 1
                 print("{} is not in the word, guesses left:{}".format(guess,guesses))
-                display_word(guessed_letters, last_word)
+                gf.display_word(guessed_letters, last_word)
                 return ending(last_word,guessed_letters,guesses,guess)
         else:
             return True
@@ -144,18 +133,17 @@ def main_hard():
     print_this = create_blank_tuple(word_length)
     display_options = find_initial_words(word_list,word_length)
 
-    while guesses > 0 and still_playing(print_this,guessed_letters):
+    while guesses > 0 and gf.still_playing(print_this,guessed_letters):
 
         if last_word:
             win = ending(the_word,guessed_letters,guesses,guess)
             if win:
-                print("Win")
-                quit()
+                gf.play_again()
             else:
-                print("You lose, the word was {}, play again(Y/N?)".format(the_word))
-                quit()
+                print("You lose, the word was {}".format(the_word))
+                gf.play_again()
 
-        guess = ask_letter(guessed_letters)
+        guess = gf.ask_letter(guessed_letters)
         working_group, in_word = is_guess_in_word(display_options,guess)
 
         if in_word:
@@ -163,7 +151,7 @@ def main_hard():
             largest_group = choose_new_group(working_group,guess)
             display_tuples = choose_best_position(largest_group)
             print_this = random.choice(display_tuples)
-            display_word(guessed_letters, print_this[0])
+            gf.display_word(guessed_letters, print_this[0])
             print("\n{} is in the word, guesses left:{}".format(guess,guesses))
             display_options = []
             for pair in display_tuples:
@@ -171,13 +159,14 @@ def main_hard():
 
         else:
             guesses -= 1
-            display_word(guessed_letters, print_this[0])
+            gf.display_word(guessed_letters, print_this[0])
             print("\n{} is not in the word, guesses left:{}".format(guess,guesses))
             if len(working_group) == 1:
                 last_word = True
                 the_word = working_group[0]
             display_options = working_group
-    print("You lose, the word was {}, play again(Y/N?)".format(random.choice(display_options)))
+    print("You lose, the word was {}".format(random.choice(display_options)))
+    gf.play_again()
 
 if __name__ == "__main__":
-    intro_question()
+    main_hard()
