@@ -1,4 +1,5 @@
-from mystery_word import *
+'''from mystery_word import *
+from game_functions import *
 
 word_list = ["bird", "calf", "river", "stream", "kneecap",  "cookbook",
              "language", "sneaker", "algorithm", "integration", "brain"]
@@ -29,12 +30,12 @@ def test_random_word():
 
 def test_display_word():
     word = "integration"
-    assert display_word(word, []) == "_ _ _ _ _ _ _ _ _ _ _"
-    assert display_word(word, ["z"]) == "_ _ _ _ _ _ _ _ _ _ _"
-    assert display_word(word, ["g"]) == "_ _ _ _ G _ _ _ _ _ _"
-    assert display_word(word, ["i"]) == "I _ _ _ _ _ _ _ I _ _"
-    assert display_word(word, ["i", "g"]) == "I _ _ _ G _ _ _ I _ _"
-    assert display_word(word, ["i", "n", "z"]) == "I N _ _ _ _ _ _ I _ N"
+    assert display_word([], word) == "_ _ _ _ _ _ _ _ _ _ _"
+    assert display_word(["z"], word) == "_ _ _ _ _ _ _ _ _ _ _"
+    assert display_word(["g"], word) == "_ _ _ _ G _ _ _ _ _ _"
+    assert display_word(["i"], word) == "I _ _ _ _ _ _ _ I _ _"
+    assert display_word(["i","g"], word) == "I _ _ _ G _ _ _ I _ _"
+    assert display_word(["i","n","z"], word) == "I N _ _ _ _ _ _ I _ N"
 
 
 def test_is_word_complete():
@@ -43,4 +44,4 @@ def test_is_word_complete():
     assert not is_word_complete(word, ["r"])
     assert not is_word_complete(word, ["r", "e"])
     assert not is_word_complete(word, ["r", "e", "z"])
-    assert is_word_complete(word, ["r", "e", "v", "i"])
+    assert is_word_complete(word, ["r", "e", "v", "i"])'''
