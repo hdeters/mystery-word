@@ -11,12 +11,17 @@ def intro_question():
         print("Not a valid choice, enter R or H")
         return intro_question()
 
+def random_word(word_list):
+    word = random.choice(word_list)
+    return word
+
 def display_word(guesses, word):
     '''Takes the list of guesses and the chosen word. Creates a list of blanks called
     current_stat that is the length of the chosen word. Checks if each guess is in the word.
     If true, assigns the guess to the correct index in current_stat.  Always puts
     previous guesses in current_stat as well as the new guess.'''
     current_stat = []
+    print_string = ""
     length = len(word)
     while length > 0:
         current_stat.append("_ ")
@@ -26,9 +31,10 @@ def display_word(guesses, word):
             spots = [i for i, letter in enumerate(word) if letter == guess]
             for idx in spots:
                 current_stat[idx] = guess + " "
-    for i in current_stat:
-        print (i, end="")
-    print("\n")
+    for letter in current_stat:
+        print_string = print_string + letter
+    print_string = print_string.rstrip(" ")
+    return(print_string.upper())
 
 def ask_letter(guessed):
     '''Ask the user for a guess and make sure it is a letter and it is one letter.
