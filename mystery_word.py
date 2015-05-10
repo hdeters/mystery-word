@@ -79,7 +79,7 @@ def main_regular():
         else:
             print("{} is in the word, guesses left: {}\n".format(guess,guesses))
 
-        gf.display_word(guessed_letters,the_word)
+        print(gf.display_word(guessed_letters,the_word))
         #print(the_word)
 
     if guesses == 0:
